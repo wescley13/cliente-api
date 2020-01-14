@@ -1,0 +1,23 @@
+version: "3.7"
+services:
+  surittec-db:
+    container_name: surittec-db
+    image: postgres:9.6-alpine
+    restart: always
+    volumes:
+      - ./data:/data/db
+    ports:
+      - "25432:5432"
+    environment:
+      POSTGRES_DB: surittec
+      POSTGRES_USER: surittec
+      POSTGRES_PASSWORD: password
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+    links:
+      - surittec-db
+    depends_on:
+      - surittec-db
